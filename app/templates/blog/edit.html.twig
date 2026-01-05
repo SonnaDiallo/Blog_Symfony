@@ -1,0 +1,356 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'article | Admin Blog{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .edit-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .edit-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .edit-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        .edit-header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .edit-header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title {
+            color: #4a5568;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+        
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .file-upload {
+            position: relative;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #667eea;
+            background: #f1f5f9;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .current-image {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .current-image img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            display: block;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .edit-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .edit-header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="edit-container">
+        <div class="edit-card">
+            <div class="edit-header">
+                <h1>✏️ Modifier l'article</h1>
+                <p>Modifiez les informations de votre article</p>
+            </div>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
+            
+            {# Titre #}
+            <div class="form-section">
+                <h2 class="section-title">Titre</h2>
+                {{ form_widget(form.title, {
+                    'attr': {
+                        'class': 'form-input',
+                        'placeholder': 'Titre de votre article...'
+                    }
+                }) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            {# Contenu #}
+            <div class="form-section">
+                <h2 class="section-title">Contenu</h2>
+                {{ form_widget(form.content, {
+                    'attr': {
+                        'class': 'form-input',
+                        'rows': '15',
+                        'placeholder': 'Contenu de votre article...'
+                    }
+                }) }}
+                {{ form_errors(form.content) }}
+            </div>
+
+            {# Catégorie et Temps de lecture #}
+            <div class="form-grid">
+                <div class="form-section">
+                    <h2 class="section-title">Catégorie</h2>
+                    {{ form_widget(form.category, {
+                        'attr': {
+                            'class': 'form-input'
+                        }
+                    }) }}
+                    {{ form_errors(form.category) }}
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Temps de lecture (en minutes)</h2>
+                    {{ form_widget(form.readingTime, {
+                        'attr': {
+                            'class': 'form-input',
+                            'placeholder': 'Ex: 5'
+                        }
+                    }) }}
+                    {{ form_errors(form.readingTime) }}
+                </div>
+            </div>
+
+            {# Image de couverture #}
+            <div class="form-section">
+                <h2 class="section-title">Image de couverture</h2>
+                
+                {# Afficher l'image actuelle #}
+                {% if post.image %}
+                    <div class="current-image">
+                        <p class="form-label">Image actuelle :</p>
+                        <img src="{{ asset('uploads/' ~ post.image) }}" alt="Image actuelle">
+                    </div>
+                {% endif %}
+                
+                <div class="file-upload">
+                    <div style="color: #667eea; font-size: 2rem; margin-bottom: 1rem;">📷</div>
+                    <p style="color: #4a5568; font-weight: 500; margin-bottom: 0.5rem;">
+                        Cliquez pour changer l'image
+                    </p>
+                    <p style="color: #718096; font-size: 0.95rem;">PNG, JPG, JPEG jusqu'à 2MB</p>
+                    {{ form_widget(form.imageFile) }}
+                </div>
+                {{ form_errors(form.imageFile) }}
+            </div>
+
+            {# Boutons d'action #}
+            <div class="btn-group">
+                <button type="submit" class="btn-primary">
+                    <span style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>💾</span>
+                        Enregistrer les modifications
+                    </span>
+                </button>
+                <a href="{{ path('app_blog_show', {id: post.id}) }}" class="btn-secondary">
+                    <span style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span>↩️</span>
+                        Annuler
+                    </span>
+                </a>
+            </div>
+            
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prévisualisation d'image
+            const fileInput = document.querySelector('input[type="file"]');
+            const fileUpload = document.querySelector('.file-upload');
+            
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files && e.target.files[0]) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            // Créer ou mettre à jour la prévisualisation
+                            let preview = document.querySelector('.image-preview');
+                            if (!preview) {
+                                preview = document.createElement('div');
+                                preview.className = 'current-image image-preview';
+                                fileUpload.parentNode.insertBefore(preview, fileUpload.nextSibling);
+                            }
+                            
+                            preview.innerHTML = `
+                                <p class="form-label">Nouvelle image :</p>
+                                <img src="${e.target.result}" alt="Prévisualisation" style="max-width: 200px; max-height: 150px; border-radius: 10px; border: 2px solid #48bb78;">
+                            `;
+                            
+                            // Mettre à jour le texte
+                            const paragraphs = fileUpload.querySelectorAll('p');
+                            if (paragraphs[0]) {
+                                paragraphs[0].textContent = e.target.files[0].name;
+                                paragraphs[0].style.color = '#48bb78';
+                            }
+                        }
+                        
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

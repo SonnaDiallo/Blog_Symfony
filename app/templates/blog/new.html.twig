@@ -1,0 +1,429 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouvel article | Admin Blog{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-container {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fb7185 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2);
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        .form-header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f97316 0%, #fb7185 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title {
+            color: #4a5568;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(135deg, #f97316 0%, #fb7185 100%);
+            border-radius: 3px;
+            display: block;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+            background: white;
+        }
+        
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .file-upload {
+            position: relative;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #f97316;
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: bold;
+        }
+        
+        .file-info {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fb7185 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .character-counter {
+            text-align: right;
+            color: #a0aec0;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .form-header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Créer un nouvel article</h1>
+                <p>Remplissez les informations ci-dessous pour publier un nouvel article sur votre blog</p>
+            </div>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
+            
+            {# Titre de l'article #}
+            <div class="form-section">
+                <h2 class="section-title">Titre de l'article</h2>
+                {{ form_widget(form.title, {
+                    'attr': {
+                        'class': 'form-input',
+                        'placeholder': 'Donnez un titre accrocheur à votre article...',
+                        'maxlength': '100'
+                    }
+                }) }}
+                <div class="character-counter">
+                    <span id="title-counter">0</span>/100 caractères
+                </div>
+                {{ form_errors(form.title) }}
+            </div>
+
+            {# Image de couverture #}
+            <div class="form-section">
+                <h2 class="section-title">Image de couverture</h2>
+                <label class="form-label">Choisissez une image attractive pour votre article</label>
+                <div class="file-upload">
+                    <div class="upload-icon">+</div>
+                    <p style="color: #4a5568; font-weight: 500; margin-bottom: 0.5rem;">
+                        Cliquez pour télécharger ou glissez-déposez
+                    </p>
+                    <p style="color: #718096; font-size: 0.95rem;">PNG, JPG, JPEG jusqu'à 2MB</p>
+                    {{ form_widget(form.imageFile, {
+                        'attr': {
+                            'onchange': 'previewImage(this)'
+                        }
+                    }) }}
+                </div>
+                <div id="image-preview" class="mt-4" style="display: none;">
+                    <img id="preview" class="rounded-lg" style="max-width: 200px; max-height: 150px; border: 2px solid #e2e8f0;">
+                </div>
+                <p class="file-info">
+                    <strong>Conseil :</strong> Utilisez une image en 1200×630px pour un rendu optimal sur toutes les plateformes
+                </p>
+                {{ form_errors(form.imageFile) }}
+            </div>
+
+            {# Catégorie et Temps de lecture #}
+            <div class="form-grid">
+                <div class="form-section">
+                    <h2 class="section-title">Catégorie</h2>
+                    {{ form_widget(form.category, {
+                        'attr': {
+                            'class': 'form-input',
+                            'placeholder': 'Ex: Conseils Déco, Architecture...'
+                        }
+                    }) }}
+                    {{ form_errors(form.category) }}
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Temps de lecture</h2>
+                    {{ form_widget(form.readingTime, {
+                        'attr': {
+                            'class': 'form-input',
+                            'placeholder': 'Durée en minutes (ex: 5)'
+                        }
+                    }) }}
+                    <p class="file-info">Temps estimé pour lire l'article</p>
+                    {{ form_errors(form.readingTime) }}
+                </div>
+            </div>
+
+            {# Contenu de l'article #}
+            <div class="form-section">
+                <h2 class="section-title">Contenu de l'article</h2>
+                <label class="form-label">Rédigez le contenu complet de votre article</label>
+                {{ form_widget(form.content, {
+                    'attr': {
+                        'class': 'form-input',
+                        'rows': '15',
+                        'placeholder': 'Commencez à écrire votre article ici... Vous pouvez utiliser du HTML pour la mise en forme.',
+                        'maxlength': '10000'
+                    }
+                }) }}
+                <div class="character-counter">
+                    <span id="content-counter">0</span>/10000 caractères
+                </div>
+                {{ form_errors(form.content) }}
+                <p class="file-info">
+                    <strong>Astuce :</strong> Utilisez des balises HTML pour structurer votre contenu
+                </p>
+            </div>
+
+            {# Boutons d'action #}
+            <div class="btn-group">
+                <button type="submit" class="btn-primary">
+                    Publier l'article
+                </button>
+                <a href="{{ path('app_blog_index') }}" class="btn-secondary">
+                    Retour aux articles
+                </a>
+            </div>
+            
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Compteur de caractères pour le titre
+        document.getElementById('{{ form.title.vars.id }}').addEventListener('input', function(e) {
+            document.getElementById('title-counter').textContent = e.target.value.length;
+        });
+        
+        // Compteur de caractères pour le contenu
+        document.getElementById('{{ form.content.vars.id }}').addEventListener('input', function(e) {
+            document.getElementById('content-counter').textContent = e.target.value.length;
+        });
+        
+        // Prévisualisation d'image
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            const previewDiv = document.getElementById('image-preview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewDiv.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+                
+                // Mettre à jour le texte
+                const fileUpload = input.closest('.file-upload');
+                const paragraphs = fileUpload.querySelectorAll('p');
+                if (paragraphs[0]) {
+                    paragraphs[0].textContent = input.files[0].name;
+                    paragraphs[0].style.color = '#16a34a';
+                }
+                if (paragraphs[1]) {
+                    paragraphs[1].textContent = (input.files[0].size / 1024 / 1024).toFixed(2) + ' MB';
+                }
+            }
+        }
+        
+        // Initialiser les compteurs
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleInput = document.getElementById('{{ form.title.vars.id }}');
+            const contentInput = document.getElementById('{{ form.content.vars.id }}');
+            
+            document.getElementById('title-counter').textContent = titleInput.value.length;
+            document.getElementById('content-counter').textContent = contentInput.value.length;
+            
+            // Glisser-déposer pour l'image
+            const fileUpload = document.querySelector('.file-upload');
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                fileUpload.style.borderColor = '#f97316';
+                fileUpload.style.background = '#fff7ed';
+            }
+            
+            function unhighlight() {
+                fileUpload.style.borderColor = '#cbd5e0';
+                fileUpload.style.background = '#f8fafc';
+            }
+            
+            fileUpload.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    const input = fileUpload.querySelector('input[type="file"]');
+                    input.files = files;
+                    previewImage(input);
+                }
+            }
+        });
+    </script>
+{% endblock %}
