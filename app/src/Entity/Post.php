@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,13 +37,23 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $price = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = null;
+
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PostLike::class, orphanRemoval: true)]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +139,28 @@ class Post
         return $this;
     }
 
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): static
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?int $stock): static
+    {
+        $this->stock = $stock;
+        return $this;
+    }
+
     public function getFormattedDate(): string
     {
         return $this->createdAt->format('d F Y');
@@ -163,6 +197,24 @@ class Post
         return substr($text, 0, $length) . '...';
     }
 
+    public function isForSale(): bool
+    {
+        return $this->price !== null && (float)$this->price > 0;
+    }
+
+    public function isInStock(): bool
+    {
+        return $this->stock === null || $this->stock > 0;
+    }
+
+    public function getFormattedPrice(): string
+    {
+        if (!$this->price) {
+            return 'Gratuit';
+        }
+        return number_format((float)$this->price, 2, ',', ' ') . ' €';
+    }
+
     // Vérifier si l'utilisateur peut modifier cet article
     public function canEdit(?User $user): bool
     {
@@ -172,5 +224,51 @@ class Post
         
         // L'auteur ou un admin peut modifier
         return $this->user === $user || in_array('ROLE_ADMIN', $user->getRoles());
+    }
+
+    /**
+     * @return Collection<int, PostLike>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(PostLike $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPost($this);
+        }
+        return $this;
+    }
+
+    public function removeLike(PostLike $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+        return $this;
+    }
+
+    public function getLikesCount(): int
+    {
+        return $this->likes->count();
+    }
+
+    public function isLikedByUser(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        foreach ($this->likes as $like) {
+            if ($like->getUser() === $user) {
+                return true;
+            }
+        }
+        return false;
     }
 }

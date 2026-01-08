@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales - Mon Blog{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
+    <!-- Header -->
+    <header class="text-white shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <a href="{{ path('app_blog_index') }}" class="text-2xl font-bold">Mon Blog</a>
+                <a href="{{ path('app_blog_index') }}" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Retour au blog
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <!-- Hero section -->
+            <div class="bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-12 text-white text-center">
+                <h1 class="text-4xl font-bold mb-4">Mentions légales</h1>
+                <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                    Informations légales et conditions d'utilisation du site
+                </p>
+            </div>
+
+            <div class="p-8 md:p-12 space-y-8">
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">1</span>
+                        Éditeur du site
+                    </h2>
+                    <p class="text-gray-600">
+                        Le site Mon Blog est édité par :<br>
+                        <strong>Mon Blog SARL</strong><br>
+                        Adresse : 123 Rue de l'Exemple, 75001 Paris, France<br>
+                        Téléphone : +33 1 23 45 67 89<br>
+                        Email : dyasmine335@gmail.com<br>
+                        SIRET : 123 456 789 00012<br>
+                        Directrice de la publication : DIALLO Sogona Yasmine
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">2</span>
+                        Hébergement
+                    </h2>
+                    <p class="text-gray-600">
+                        Le site est hébergé par :<br>
+                        <strong>Hébergeur Example</strong><br>
+                        Adresse : 456 Avenue du Serveur, 69001 Lyon, France<br>
+                        Téléphone : +33 4 56 78 90 12
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">3</span>
+                        Propriété intellectuelle
+                    </h2>
+                    <p class="text-gray-600">
+                        L'ensemble du contenu de ce site (textes, images, vidéos, logos, etc.) est protégé par le droit d'auteur. 
+                        Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments 
+                        du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">4</span>
+                        Protection des données personnelles
+                    </h2>
+                    <p class="text-gray-600">
+                        Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, 
+                        de rectification, de suppression et d'opposition aux données personnelles vous concernant. Pour exercer 
+                        ces droits, vous pouvez nous contacter à l'adresse : contact@monblog.com
+                    </p>
+                    <p class="text-gray-600 mt-4">
+                        Les données collectées sur ce site sont utilisées uniquement dans le cadre de la gestion des comptes 
+                        utilisateurs et de l'amélioration de nos services. Elles ne sont en aucun cas cédées à des tiers.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">5</span>
+                        Cookies
+                    </h2>
+                    <p class="text-gray-600">
+                        Ce site utilise des cookies pour améliorer l'expérience utilisateur. En continuant à naviguer sur ce site, 
+                        vous acceptez l'utilisation de cookies. Vous pouvez configurer votre navigateur pour refuser les cookies.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">6</span>
+                        Limitation de responsabilité
+                    </h2>
+                    <p class="text-gray-600">
+                        Mon Blog ne saurait être tenu responsable des dommages directs ou indirects résultant de l'accès ou de 
+                        l'utilisation du site, y compris l'inaccessibilité, les pertes de données, les détériorations ou virus 
+                        qui pourraient affecter l'équipement informatique de l'utilisateur.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">7</span>
+                        Droit applicable
+                    </h2>
+                    <p class="text-gray-600">
+                        Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français 
+                        seront seuls compétents.
+                    </p>
+                </section>
+
+                <div class="mt-8 pt-8 border-t border-gray-200">
+                    <p class="text-sm text-gray-500 text-center">
+                        Dernière mise à jour : {{ 'now'|date('d/m/Y') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-12 mt-16 shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-white text-lg mb-4">
+                    © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.
+                </p>
+                <div class="flex justify-center gap-6">
+                    <a href="{{ path('mentions_legales') }}" class="text-white font-medium">Mentions légales</a>
+                    <a href="{{ path('contact') }}" class="text-white/80 hover:text-white transition-colors">Contact</a>
+                    <a href="{{ path('a_propos') }}" class="text-white/80 hover:text-white transition-colors">À propos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

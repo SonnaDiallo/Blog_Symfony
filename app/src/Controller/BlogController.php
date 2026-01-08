@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +19,19 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class BlogController extends AbstractController
 {
     #[Route('/', name: 'app_blog_index', methods: ['GET'])]
-    public function index(PostRepository $postRepository): Response
+    public function index(Request $request, PostRepository $postRepository): Response
     {
+        $query = $request->query->get('q', '');
+        
+        if ($query) {
+            $posts = $postRepository->searchByTitleOrContent($query);
+        } else {
+            $posts = $postRepository->findAllOrderedByDate();
+        }
+        
         return $this->render('blog/index.html.twig', [
-            'posts' => $postRepository->findAllOrderedByDate(),
+            'posts' => $posts,
+            'searchQuery' => $query,
         ]);
     }
 
@@ -87,14 +97,17 @@ class BlogController extends AbstractController
 
     // /{id} doit être APRÈS les routes spécifiques
     #[Route('/{id}', name: 'app_blog_show', methods: ['GET'])]
-    public function show(Post $post = null): Response
+    public function show(Post $post = null, CommentRepository $commentRepository): Response
     {
         if (!$post) {
             throw $this->createNotFoundException('L\'article demandé n\'existe pas.');
         }
         
+        $comments = $commentRepository->findApprovedByPost($post);
+        
         return $this->render('blog/show.html.twig', [
             'post' => $post,
+            'comments' => $comments,
         ]);
     }
 

@@ -1,1 +1,18 @@
-.env*
+###> Environment ###
+.env
+.env.local
+.env*.local
+!.env.example
+
+###> IDE ###
+/.idea/
+/.vscode/
+*.swp
+*.swo
+
+###> OS ###
+.DS_Store
+Thumbs.db
+
+###> Docker volumes data (si utilisé localement) ###
+/data/

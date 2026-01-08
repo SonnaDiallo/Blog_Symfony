@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur serveur - Mon Blog{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 flex flex-col">
+    
+    {# Navigation #}
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="{{ path('app_blog_index') }}" class="text-orange-500 font-bold text-2xl">Mon Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    {# Contenu #}
+    <main class="flex-1 flex items-center justify-center px-4">
+        <div class="text-center">
+            <div class="w-32 h-32 mx-auto mb-8 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #fecaca, #fee2e2);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            
+            <h1 class="text-6xl font-bold text-red-500 mb-4">500</h1>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Erreur serveur</h2>
+            <p class="text-gray-500 mb-8 max-w-md mx-auto">
+                Oups ! Une erreur s'est produite sur notre serveur. Nous travaillons à résoudre le problème.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{{ path('app_blog_index') }}" 
+                   class="px-8 py-3 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                   style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+                    Retour à l'accueil
+                </a>
+                <a href="javascript:location.reload()" 
+                   class="px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 hover:border-gray-400 transition-all font-medium">
+                    Réessayer
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    {# Footer #}
+    <footer class="text-white py-6" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-white/90">© {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.</p>
+        </div>
+    </footer>
+</div>
+{% endblock %}

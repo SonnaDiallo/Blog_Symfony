@@ -29,7 +29,7 @@
                            name="name" 
                            value="{{ category.name }}"
                            required
-                           class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                           class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                            placeholder="Ex: Conseils Déco">
                     <p class="mt-1 text-sm text-neutral-500">Slug actuel : {{ category.slug }}</p>
                 </div>
@@ -41,7 +41,7 @@
                     <textarea id="description" 
                               name="description" 
                               rows="3"
-                              class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                              class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                               placeholder="Description courte de la catégorie">{{ category.description }}</textarea>
                 </div>
 
@@ -63,7 +63,7 @@
 
                 <div class="flex items-center gap-4 pt-4">
                     <button type="submit" 
-                            class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all font-medium">
+                            class="px-6 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all font-medium">
                         Enregistrer les modifications
                     </button>
                     <a href="{{ path('admin_categories') }}" 

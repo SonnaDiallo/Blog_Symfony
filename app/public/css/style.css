@@ -5,13 +5,86 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #f97316; /* orange-500 */
+    --color-secondary: #fb7185; /* rose-400 (corail) */
+    --color-accent: #fbbf24; /* amber-400 */
+    --bg-gradient: linear-gradient(135deg, #fffaf0 0%, #fff1e6 100%);
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: var(--bg-gradient);
     min-height: 100vh;
 }
+
+/* --- Palette utilities --- */
+.text-primary { color: var(--color-primary) !important; }
+.text-secondary { color: var(--color-secondary) !important; }
+.text-accent { color: var(--color-accent) !important; }
+.bg-primary { background-color: var(--color-primary) !important; color: #fff; }
+
+/* Shades (utility variables) */
+:root {
+    --color-primary-50: #fff7ed;
+    --color-primary-100: #ffedd5;
+    --color-primary-200: #fed7aa;
+    --color-amber-100: #fffbeb;
+    --color-amber-200: #fef3c7;
+    --color-secondary-50: #fff1f2;
+    --color-secondary-100: #ffe4e6;
+}
+
+/* Background / Border utilities */
+.bg-primary-50 { background-color: var(--color-primary-50) !important; }
+.bg-accent-100 { background-color: var(--color-amber-100) !important; }
+.bg-secondary-50 { background-color: var(--color-secondary-50) !important; }
+.border-primary-200 { border-color: var(--color-primary-200) !important; }
+.border-accent-200 { border-color: var(--color-amber-200) !important; }
+.border-secondary-200 { border-color: var(--color-secondary-100) !important; }
+
+/* Hover helpers */
+.hover\:text-primary:hover { color: var(--color-primary) !important; }
+.hover\:bg-primary-50:hover { background-color: var(--color-primary-50) !important; }
+
+/* Gradients */
+.bg-gradient-sunset {
+    background: linear-gradient(to bottom right, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-secondary) 100%);
+}
+.bg-gradient-soft {
+    background: linear-gradient(to bottom right, var(--color-primary-50), var(--color-amber-100));
+}
+.gradient-primary-accent { background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); }
+.gradient-primary-secondary { background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); }
+
+/* Button utilities */
+.btn-primary {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: .75rem;
+    padding: .6rem 1rem;
+}
+.btn-secondary {
+    background: linear-gradient(90deg, var(--color-secondary), #ff9cc0);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: .75rem;
+    padding: .6rem 1rem;
+}
+
+.category-badge {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    color: #fff;
+}
+
+/* End palette utilities */
 
 /* Hero Section avec image de fond */
 .hero {

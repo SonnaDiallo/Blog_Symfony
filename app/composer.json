@@ -7,18 +7,18 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/dbal": "^3.10.3",
-        "doctrine/doctrine-bundle": "^2.18.1",
+        "doctrine/dbal": "^3.10.4",
+        "doctrine/doctrine-bundle": "^2.18.2",
         "doctrine/doctrine-migrations-bundle": "^3.7",
-        "doctrine/orm": "^3.5.7",
+        "doctrine/orm": "^3.6.0",
         "symfony/asset": "7.3.*",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/flex": "^2.10",
         "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
-        "symfony/maker-bundle": "^1.65",
-        "symfony/monolog-bundle": "^3.10",
+        "symfony/mime": "7.3.*",
+        "symfony/monolog-bundle": "^3.11.1",
         "symfony/runtime": "7.3.*",
         "symfony/security-bundle": "7.3.*",
         "symfony/security-csrf": "7.3.*",
@@ -39,6 +39,9 @@
         "psr-4": {
             "App\\": "src/"
         }
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.65.1"
     },
     "autoload-dev": {
         "psr-4": {

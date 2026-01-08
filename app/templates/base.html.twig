@@ -78,7 +78,7 @@
     
     {% block stylesheets %}{% endblock %}
 </head>
-<body class="bg-neutral-50">
+<body class="bg-neutral-50" {% block body_style %}{% endblock %}>
     {% block body %}{% endblock %}
     
     {% block javascripts %}{% endblock %}

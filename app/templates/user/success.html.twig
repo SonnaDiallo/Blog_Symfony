@@ -3,31 +3,35 @@
 {% block title %}Profil enregistré{% endblock %}
 
 {% block body %}
-<div class="success-container">
-    <div class="success-card">
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        
-        <h2>Profil enregistré avec succès !</h2>
-        
-        <p>
-            Vos informations ont été sauvegardées avec succès. 
-            Vous pouvez maintenant profiter pleinement de votre expérience sur notre blog.
-        </p>
-        
-        <div class="success-actions">
-            <a href="{{ path('blog_index') }}" class="btn-primary">
-                <i class="fas fa-newspaper"></i> Voir les articles
-            </a>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-amber-400 to-rose-500 py-12 px-4">
+    <div class="max-w-md w-full">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 text-center">
+            {# Icône de succès #}
+            <div class="mx-auto w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
             
-            <a href="{{ path('blog_new') }}" class="btn-secondary">
-                <i class="fas fa-pen"></i> Créer un article
-            </a>
+            <h2 class="text-2xl font-bold text-neutral-900 mb-4">Profil enregistré avec succès !</h2>
             
-            <a href="{{ path('user_profile') }}" class="btn-secondary">
-                <i class="fas fa-edit"></i> Modifier mon profil
-            </a>
+            <p class="text-neutral-600 mb-8">
+                Vos informations ont été sauvegardées. Vous pouvez maintenant profiter pleinement de votre expérience.
+            </p>
+            
+            <div class="space-y-3">
+                <a href="{{ path('app_blog_index') }}" 
+                   class="w-full flex justify-center items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-lg">
+                    Voir les articles
+                </a>
+                
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_blog_new') }}" 
+                   class="w-full flex justify-center items-center gap-2 px-6 py-3 border-2 border-orange-500 text-orange-600 rounded-lg hover:bg-orange-50 transition-all">
+                    Créer un article
+                </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

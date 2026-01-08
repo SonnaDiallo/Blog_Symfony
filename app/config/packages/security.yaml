@@ -36,9 +36,11 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/blog/new, roles: ROLE_USER }
         - { path: ^/blog/.*/edit, roles: ROLE_USER }
         - { path: ^/blog/.*/delete, roles: ROLE_USER }
+        - { path: ^/panier, roles: ROLE_USER }
 
 when@test:
     security:

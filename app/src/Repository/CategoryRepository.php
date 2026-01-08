@@ -22,8 +22,8 @@ class CategoryRepository extends ServiceEntityRepository
     public function findAllWithArticleCount(): array
     {
         return $this->createQueryBuilder('c')
-            ->select('c', 'COUNT(a.id) as articleCount')
-            ->leftJoin('c.articles', 'a')
+            ->select('c', 'COUNT(p.id) as articleCount')
+            ->leftJoin('c.posts', 'p')
             ->groupBy('c.id')
             ->orderBy('c.name', 'ASC')
             ->getQuery()
@@ -48,10 +48,10 @@ class CategoryRepository extends ServiceEntityRepository
     public function findMostPopular(int $limit = 5): array
     {
         return $this->createQueryBuilder('c')
-            ->select('c', 'COUNT(a.id) as articleCount')
-            ->leftJoin('c.articles', 'a')
+            ->select('c', 'COUNT(p.id) as articleCount')
+            ->leftJoin('c.posts', 'p')
             ->groupBy('c.id')
-            ->having('COUNT(a.id) > 0')
+            ->having('COUNT(p.id) > 0')
             ->orderBy('articleCount', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()

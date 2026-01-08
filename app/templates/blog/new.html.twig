@@ -1,429 +1,251 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouvel article | Admin Blog{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .form-container {
-            background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fb7185 100%);
-            min-height: 100vh;
-            padding: 2rem 0;
-        }
-        
-        .form-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2);
-            padding: 3rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .form-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-        
-        .form-header h1 {
-            color: #2d3748;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #f97316 0%, #fb7185 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        
-        .form-header p {
-            color: #718096;
-            font-size: 1.1rem;
-        }
-        
-        .form-section {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        .section-title {
-            color: #4a5568;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .section-title::before {
-            content: '';
-            width: 6px;
-            height: 24px;
-            background: linear-gradient(135deg, #f97316 0%, #fb7185 100%);
-            border-radius: 3px;
-            display: block;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #f97316;
-            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
-            background: white;
-        }
-        
-        .form-input::placeholder {
-            color: #a0aec0;
-        }
-        
-        .file-upload {
-            position: relative;
-            border: 2px dashed #cbd5e0;
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            text-align: center;
-            background: #f8fafc;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .file-upload:hover {
-            border-color: #f97316;
-            background: #fff7ed;
-        }
-        
-        .file-upload input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-        
-        .upload-icon {
-            font-size: 3rem;
-            color: #f97316;
-            margin-bottom: 1rem;
-            display: block;
-            font-weight: bold;
-        }
-        
-        .file-info {
-            color: #718096;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fb7185 100%);
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        
-        .btn-secondary:hover {
-            background: #fde68a;
-            transform: translateY(-2px);
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .character-counter {
-            text-align: right;
-            color: #a0aec0;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            color: #4a5568;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-        
-        .error-message {
-            color: #e53e3e;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .form-card {
-                padding: 2rem 1.5rem;
-                margin: 1rem;
-            }
-            
-            .form-header h1 {
-                font-size: 2rem;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-            }
-        }
-    </style>
-{% endblock %}
+{% block title %}Déposer un article - Mon Blog{% endblock %}
 
 {% block body %}
-    <div class="form-container">
-        <div class="form-card">
-            <div class="form-header">
-                <h1>Créer un nouvel article</h1>
-                <p>Remplissez les informations ci-dessous pour publier un nouvel article sur votre blog</p>
-            </div>
-
-            {{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
-            
-            {# Titre de l'article #}
-            <div class="form-section">
-                <h2 class="section-title">Titre de l'article</h2>
-                {{ form_widget(form.title, {
-                    'attr': {
-                        'class': 'form-input',
-                        'placeholder': 'Donnez un titre accrocheur à votre article...',
-                        'maxlength': '100'
-                    }
-                }) }}
-                <div class="character-counter">
-                    <span id="title-counter">0</span>/100 caractères
+<div class="min-h-screen bg-gray-50">
+    
+    {# Navigation style Leboncoin #}
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a href="{{ path('app_blog_index') }}" class="text-orange-500 font-bold text-2xl">Mon Blog</a>
+                    <a href="{{ path('app_blog_index') }}" class="text-gray-500 hover:text-orange-500 transition-colors hidden md:block">Parcourir</a>
                 </div>
-                {{ form_errors(form.title) }}
+                <div class="flex items-center gap-4">
+                    <a href="{{ path('app_blog_my_posts') }}" class="text-gray-600 hover:text-orange-500 transition-colors font-medium">Mes articles</a>
+                    {% if app.user %}
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+                            {{ app.user.firstName|first|upper }}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
+        </div>
+    </nav>
 
-            {# Image de couverture #}
-            <div class="form-section">
-                <h2 class="section-title">Image de couverture</h2>
-                <label class="form-label">Choisissez une image attractive pour votre article</label>
-                <div class="file-upload">
-                    <div class="upload-icon">+</div>
-                    <p style="color: #4a5568; font-weight: 500; margin-bottom: 0.5rem;">
-                        Cliquez pour télécharger ou glissez-déposez
-                    </p>
-                    <p style="color: #718096; font-size: 0.95rem;">PNG, JPG, JPEG jusqu'à 2MB</p>
+    {# Barre de progression style Leboncoin #}
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 py-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: linear-gradient(135deg, #f97316, #f59e0b);">1</div>
+                    <span class="text-gray-900 font-medium hidden sm:block">Informations</span>
+                </div>
+                <div class="flex-1 h-1 bg-gray-200 rounded-full">
+                    <div class="h-full w-1/3 rounded-full" style="background: linear-gradient(to right, #f97316, #f59e0b);"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-sm">2</div>
+                    <span class="text-gray-400 font-medium hidden sm:block">Publication</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Contenu principal #}
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        {# En-tête #}
+        <div class="mb-8 text-center">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #fed7aa, #fef3c7);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Déposer un article</h1>
+            <p class="text-gray-500">Partagez vos idées et inspirations avec la communauté</p>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+        
+        {# Section 1: Informations principales #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #fff7ed, #fffbeb);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Informations de l'article
+                </h2>
+            </div>
+            <div class="p-6 space-y-6">
+                {# Titre #}
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Titre de l'article <span class="text-orange-500">*</span></label>
+                    {{ form_widget(form.title, {
+                        'attr': {
+                            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all text-lg',
+                            'placeholder': 'Ex: 10 astuces pour décorer son salon'
+                        }
+                    }) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                {# Contenu #}
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span class="text-orange-500">*</span></label>
+                    {{ form_widget(form.content, {
+                        'attr': {
+                            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                            'rows': '8',
+                            'placeholder': 'Décrivez votre article en détail...'
+                        }
+                    }) }}
+                    {{ form_errors(form.content) }}
+                    <p class="text-xs text-gray-400 mt-2">Minimum 50 caractères recommandés</p>
+                </div>
+
+                {# Catégorie et Temps de lecture #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Catégorie</label>
+                        {{ form_widget(form.category, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all bg-white'
+                            }
+                        }) }}
+                        {{ form_errors(form.category) }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Temps de lecture (min)</label>
+                        {{ form_widget(form.readingTime, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                'placeholder': '5'
+                            }
+                        }) }}
+                        {{ form_errors(form.readingTime) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Section 2: Image #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #f0fdf4, #ecfdf5);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Photo de couverture
+                </h2>
+            </div>
+            <div class="p-6">
+                <label id="imageDropZone" class="block border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-orange-400 hover:bg-orange-50/50 transition-all cursor-pointer">
+                    <div id="imagePreviewContainer" class="hidden">
+                        <img id="imagePreview" src="" alt="Aperçu" class="max-h-48 mx-auto rounded-lg mb-4 object-cover">
+                        <p class="text-gray-600 font-medium mb-1" id="imageName"></p>
+                        <p class="text-sm text-orange-500">Cliquez pour changer l'image</p>
+                    </div>
+                    <div id="imageUploadPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="text-gray-600 font-medium mb-1">Cliquez pour ajouter une photo</p>
+                        <p class="text-sm text-gray-400">PNG, JPG jusqu'à 5MB</p>
+                    </div>
                     {{ form_widget(form.imageFile, {
                         'attr': {
+                            'class': 'hidden',
+                            'id': 'imageFile',
                             'onchange': 'previewImage(this)'
                         }
                     }) }}
-                </div>
-                <div id="image-preview" class="mt-4" style="display: none;">
-                    <img id="preview" class="rounded-lg" style="max-width: 200px; max-height: 150px; border: 2px solid #e2e8f0;">
-                </div>
-                <p class="file-info">
-                    <strong>Conseil :</strong> Utilisez une image en 1200×630px pour un rendu optimal sur toutes les plateformes
-                </p>
+                </label>
                 {{ form_errors(form.imageFile) }}
             </div>
-
-            {# Catégorie et Temps de lecture #}
-            <div class="form-grid">
-                <div class="form-section">
-                    <h2 class="section-title">Catégorie</h2>
-                    {{ form_widget(form.category, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': 'Ex: Conseils Déco, Architecture...'
-                        }
-                    }) }}
-                    {{ form_errors(form.category) }}
-                </div>
+            
+            <script>
+            function previewImage(input) {
+                const preview = document.getElementById('imagePreview');
+                const previewContainer = document.getElementById('imagePreviewContainer');
+                const placeholder = document.getElementById('imageUploadPlaceholder');
+                const imageName = document.getElementById('imageName');
                 
-                <div class="form-section">
-                    <h2 class="section-title">Temps de lecture</h2>
-                    {{ form_widget(form.readingTime, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': 'Durée en minutes (ex: 5)'
-                        }
-                    }) }}
-                    <p class="file-info">Temps estimé pour lire l'article</p>
-                    {{ form_errors(form.readingTime) }}
-                </div>
-            </div>
-
-            {# Contenu de l'article #}
-            <div class="form-section">
-                <h2 class="section-title">Contenu de l'article</h2>
-                <label class="form-label">Rédigez le contenu complet de votre article</label>
-                {{ form_widget(form.content, {
-                    'attr': {
-                        'class': 'form-input',
-                        'rows': '15',
-                        'placeholder': 'Commencez à écrire votre article ici... Vous pouvez utiliser du HTML pour la mise en forme.',
-                        'maxlength': '10000'
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        imageName.textContent = input.files[0].name;
+                        previewContainer.classList.remove('hidden');
+                        placeholder.classList.add('hidden');
                     }
-                }) }}
-                <div class="character-counter">
-                    <span id="content-counter">0</span>/10000 caractères
-                </div>
-                {{ form_errors(form.content) }}
-                <p class="file-info">
-                    <strong>Astuce :</strong> Utilisez des balises HTML pour structurer votre contenu
-                </p>
-            </div>
-
-            {# Boutons d'action #}
-            <div class="btn-group">
-                <button type="submit" class="btn-primary">
-                    Publier l'article
-                </button>
-                <a href="{{ path('app_blog_index') }}" class="btn-secondary">
-                    Retour aux articles
-                </a>
-            </div>
-            
-            {{ form_end(form) }}
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            </script>
         </div>
-    </div>
-{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        // Compteur de caractères pour le titre
-        document.getElementById('{{ form.title.vars.id }}').addEventListener('input', function(e) {
-            document.getElementById('title-counter').textContent = e.target.value.length;
-        });
+        {# Section 3: Vente (optionnel) #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #fff7ed, #fffbeb);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Vente <span class="text-sm font-normal text-gray-400">(optionnel)</span>
+                </h2>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4">Laissez vide si vous ne souhaitez pas vendre cet article</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Prix (€)</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">€</span>
+                            {{ form_widget(form.price, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                    'placeholder': '29.99'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.price) }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Stock disponible</label>
+                        {{ form_widget(form.stock, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                'placeholder': '10'
+                            }
+                        }) }}
+                        {{ form_errors(form.stock) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Boutons d'action #}
+        <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+            <button type="submit" 
+                    class="w-full sm:w-auto px-10 py-4 text-white rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                    style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+                <span class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Publier l'article
+                </span>
+            </button>
+            <a href="{{ path('app_blog_my_posts') }}" 
+               class="w-full sm:w-auto px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-center">
+                Annuler
+            </a>
+        </div>
         
-        // Compteur de caractères pour le contenu
-        document.getElementById('{{ form.content.vars.id }}').addEventListener('input', function(e) {
-            document.getElementById('content-counter').textContent = e.target.value.length;
-        });
-        
-        // Prévisualisation d'image
-        function previewImage(input) {
-            const preview = document.getElementById('preview');
-            const previewDiv = document.getElementById('image-preview');
-            
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    previewDiv.style.display = 'block';
-                }
-                
-                reader.readAsDataURL(input.files[0]);
-                
-                // Mettre à jour le texte
-                const fileUpload = input.closest('.file-upload');
-                const paragraphs = fileUpload.querySelectorAll('p');
-                if (paragraphs[0]) {
-                    paragraphs[0].textContent = input.files[0].name;
-                    paragraphs[0].style.color = '#16a34a';
-                }
-                if (paragraphs[1]) {
-                    paragraphs[1].textContent = (input.files[0].size / 1024 / 1024).toFixed(2) + ' MB';
-                }
-            }
-        }
-        
-        // Initialiser les compteurs
-        document.addEventListener('DOMContentLoaded', function() {
-            const titleInput = document.getElementById('{{ form.title.vars.id }}');
-            const contentInput = document.getElementById('{{ form.content.vars.id }}');
-            
-            document.getElementById('title-counter').textContent = titleInput.value.length;
-            document.getElementById('content-counter').textContent = contentInput.value.length;
-            
-            // Glisser-déposer pour l'image
-            const fileUpload = document.querySelector('.file-upload');
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, preventDefaults, false);
-            });
-            
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            ['dragenter', 'dragover'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, highlight, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, unhighlight, false);
-            });
-            
-            function highlight() {
-                fileUpload.style.borderColor = '#f97316';
-                fileUpload.style.background = '#fff7ed';
-            }
-            
-            function unhighlight() {
-                fileUpload.style.borderColor = '#cbd5e0';
-                fileUpload.style.background = '#f8fafc';
-            }
-            
-            fileUpload.addEventListener('drop', handleDrop, false);
-            
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    const input = fileUpload.querySelector('input[type="file"]');
-                    input.files = files;
-                    previewImage(input);
-                }
-            }
-        });
-    </script>
+        {{ form_end(form) }}
+    </main>
+    
+    {# Footer #}
+    <footer class="text-white py-8 mt-16" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-white/90">
+                © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+</div>
 {% endblock %}

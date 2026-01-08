@@ -1,356 +1,258 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier l'article | Admin Blog{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .edit-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem 0;
-        }
-        
-        .edit-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            padding: 3rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .edit-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-        
-        .edit-header h1 {
-            color: #2d3748;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        
-        .edit-header p {
-            color: #718096;
-            font-size: 1.1rem;
-        }
-        
-        .form-section {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        .section-title {
-            color: #4a5568;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .section-title::before {
-            content: '';
-            width: 6px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 3px;
-            display: block;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            background: white;
-        }
-        
-        .form-input::placeholder {
-            color: #a0aec0;
-        }
-        
-        .file-upload {
-            position: relative;
-            border: 2px dashed #cbd5e0;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            background: #f8fafc;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .file-upload:hover {
-            border-color: #667eea;
-            background: #f1f5f9;
-        }
-        
-        .file-upload input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-        
-        .current-image {
-            margin-top: 1rem;
-            text-align: center;
-        }
-        
-        .current-image img {
-            max-width: 200px;
-            max-height: 150px;
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #edf2f7;
-            color: #4a5568;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        
-        .btn-secondary:hover {
-            background: #e2e8f0;
-            transform: translateY(-2px);
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .form-label {
-            display: block;
-            color: #4a5568;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-        
-        .error-message {
-            color: #e53e3e;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-        }
-        
-        @media (max-width: 768px) {
-            .edit-card {
-                padding: 2rem 1.5rem;
-                margin: 1rem;
-            }
-            
-            .edit-header h1 {
-                font-size: 2rem;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-            }
-        }
-    </style>
-{% endblock %}
+{% block title %}Modifier l'article - Mon Blog{% endblock %}
 
 {% block body %}
-    <div class="edit-container">
-        <div class="edit-card">
-            <div class="edit-header">
-                <h1>✏️ Modifier l'article</h1>
-                <p>Modifiez les informations de votre article</p>
-            </div>
-
-            {{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
-            
-            {# Titre #}
-            <div class="form-section">
-                <h2 class="section-title">Titre</h2>
-                {{ form_widget(form.title, {
-                    'attr': {
-                        'class': 'form-input',
-                        'placeholder': 'Titre de votre article...'
-                    }
-                }) }}
-                {{ form_errors(form.title) }}
-            </div>
-
-            {# Contenu #}
-            <div class="form-section">
-                <h2 class="section-title">Contenu</h2>
-                {{ form_widget(form.content, {
-                    'attr': {
-                        'class': 'form-input',
-                        'rows': '15',
-                        'placeholder': 'Contenu de votre article...'
-                    }
-                }) }}
-                {{ form_errors(form.content) }}
-            </div>
-
-            {# Catégorie et Temps de lecture #}
-            <div class="form-grid">
-                <div class="form-section">
-                    <h2 class="section-title">Catégorie</h2>
-                    {{ form_widget(form.category, {
-                        'attr': {
-                            'class': 'form-input'
-                        }
-                    }) }}
-                    {{ form_errors(form.category) }}
+<div class="min-h-screen bg-gray-50">
+    
+    {# Navigation style Leboncoin #}
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a href="{{ path('app_blog_index') }}" class="text-orange-500 font-bold text-2xl">Mon Blog</a>
+                    <a href="{{ path('app_blog_index') }}" class="text-gray-500 hover:text-orange-500 transition-colors hidden md:block">Parcourir</a>
                 </div>
-                
-                <div class="form-section">
-                    <h2 class="section-title">Temps de lecture (en minutes)</h2>
-                    {{ form_widget(form.readingTime, {
-                        'attr': {
-                            'class': 'form-input',
-                            'placeholder': 'Ex: 5'
-                        }
-                    }) }}
-                    {{ form_errors(form.readingTime) }}
+                <div class="flex items-center gap-4">
+                    <a href="{{ path('app_blog_my_posts') }}" class="text-gray-600 hover:text-orange-500 transition-colors font-medium">Mes articles</a>
+                    {% if app.user %}
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+                            {{ app.user.firstName|first|upper }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
+        </div>
+    </nav>
 
-            {# Image de couverture #}
-            <div class="form-section">
-                <h2 class="section-title">Image de couverture</h2>
-                
-                {# Afficher l'image actuelle #}
-                {% if post.image %}
-                    <div class="current-image">
-                        <p class="form-label">Image actuelle :</p>
-                        <img src="{{ asset('uploads/' ~ post.image) }}" alt="Image actuelle">
-                    </div>
-                {% endif %}
-                
-                <div class="file-upload">
-                    <div style="color: #667eea; font-size: 2rem; margin-bottom: 1rem;">📷</div>
-                    <p style="color: #4a5568; font-weight: 500; margin-bottom: 0.5rem;">
-                        Cliquez pour changer l'image
-                    </p>
-                    <p style="color: #718096; font-size: 0.95rem;">PNG, JPG, JPEG jusqu'à 2MB</p>
-                    {{ form_widget(form.imageFile) }}
+    {# Barre de progression #}
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 py-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: linear-gradient(135deg, #f97316, #f59e0b);">1</div>
+                    <span class="text-gray-900 font-medium hidden sm:block">Modification</span>
                 </div>
-                {{ form_errors(form.imageFile) }}
+                <div class="flex-1 h-1 bg-gray-200 rounded-full">
+                    <div class="h-full w-2/3 rounded-full" style="background: linear-gradient(to right, #f97316, #f59e0b);"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-sm">2</div>
+                    <span class="text-gray-400 font-medium hidden sm:block">Publication</span>
+                </div>
             </div>
-
-            {# Boutons d'action #}
-            <div class="btn-group">
-                <button type="submit" class="btn-primary">
-                    <span style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span>💾</span>
-                        Enregistrer les modifications
-                    </span>
-                </button>
-                <a href="{{ path('app_blog_show', {id: post.id}) }}" class="btn-secondary">
-                    <span style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span>↩️</span>
-                        Annuler
-                    </span>
-                </a>
-            </div>
-            
-            {{ form_end(form) }}
         </div>
     </div>
-{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Prévisualisation d'image
-            const fileInput = document.querySelector('input[type="file"]');
-            const fileUpload = document.querySelector('.file-upload');
-            
-            if (fileInput) {
-                fileInput.addEventListener('change', function(e) {
-                    if (e.target.files && e.target.files[0]) {
-                        const reader = new FileReader();
-                        
-                        reader.onload = function(e) {
-                            // Créer ou mettre à jour la prévisualisation
-                            let preview = document.querySelector('.image-preview');
-                            if (!preview) {
-                                preview = document.createElement('div');
-                                preview.className = 'current-image image-preview';
-                                fileUpload.parentNode.insertBefore(preview, fileUpload.nextSibling);
-                            }
-                            
-                            preview.innerHTML = `
-                                <p class="form-label">Nouvelle image :</p>
-                                <img src="${e.target.result}" alt="Prévisualisation" style="max-width: 200px; max-height: 150px; border-radius: 10px; border: 2px solid #48bb78;">
-                            `;
-                            
-                            // Mettre à jour le texte
-                            const paragraphs = fileUpload.querySelectorAll('p');
-                            if (paragraphs[0]) {
-                                paragraphs[0].textContent = e.target.files[0].name;
-                                paragraphs[0].style.color = '#48bb78';
-                            }
+    {# Contenu principal #}
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        {# En-tête #}
+        <div class="mb-8 text-center">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #fed7aa, #fef3c7);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Modifier l'article</h1>
+            <p class="text-gray-500">{{ post.title }}</p>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+        
+        {# Section 1: Informations principales #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #fff7ed, #fffbeb);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Informations de l'article
+                </h2>
+            </div>
+            <div class="p-6 space-y-6">
+                {# Titre #}
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Titre de l'article <span class="text-orange-500">*</span></label>
+                    {{ form_widget(form.title, {
+                        'attr': {
+                            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all text-lg',
+                            'placeholder': 'Ex: 10 astuces pour décorer son salon'
                         }
-                        
-                        reader.readAsDataURL(e.target.files[0]);
+                    }) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                {# Contenu #}
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span class="text-orange-500">*</span></label>
+                    {{ form_widget(form.content, {
+                        'attr': {
+                            'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                            'rows': '8',
+                            'placeholder': 'Décrivez votre article en détail...'
+                        }
+                    }) }}
+                    {{ form_errors(form.content) }}
+                </div>
+
+                {# Catégorie et Temps de lecture #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Catégorie</label>
+                        {{ form_widget(form.category, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all bg-white'
+                            }
+                        }) }}
+                        {{ form_errors(form.category) }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Temps de lecture (min)</label>
+                        {{ form_widget(form.readingTime, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                'placeholder': '5'
+                            }
+                        }) }}
+                        {{ form_errors(form.readingTime) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Section 2: Image #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #f0fdf4, #ecfdf5);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Photo de couverture
+                </h2>
+            </div>
+            <div class="p-6">
+                {# Image actuelle #}
+                {% if post.image %}
+                <div class="mb-4 p-4 bg-gray-50 rounded-xl">
+                    <p class="text-sm font-medium text-gray-700 mb-2">Image actuelle :</p>
+                    <img src="{{ asset('uploads/' ~ post.image) }}" alt="{{ post.title }}" class="w-40 h-28 object-cover rounded-lg">
+                </div>
+                {% endif %}
+                
+                <label id="imageDropZone" class="block border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-orange-400 hover:bg-orange-50/50 transition-all cursor-pointer">
+                    <div id="imagePreviewContainer" class="hidden">
+                        <img id="imagePreview" src="" alt="Aperçu" class="max-h-48 mx-auto rounded-lg mb-4 object-cover">
+                        <p class="text-gray-600 font-medium mb-1" id="imageName"></p>
+                        <p class="text-sm text-orange-500">Cliquez pour changer l'image</p>
+                    </div>
+                    <div id="imageUploadPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="text-gray-600 font-medium mb-1">Cliquez pour changer la photo</p>
+                        <p class="text-sm text-gray-400">PNG, JPG jusqu'à 5MB (laissez vide pour garder l'actuelle)</p>
+                    </div>
+                    {{ form_widget(form.imageFile, {
+                        'attr': {
+                            'class': 'hidden',
+                            'id': 'imageFile',
+                            'onchange': 'previewImage(this)'
+                        }
+                    }) }}
+                </label>
+                {{ form_errors(form.imageFile) }}
+            </div>
+            
+            <script>
+            function previewImage(input) {
+                const preview = document.getElementById('imagePreview');
+                const previewContainer = document.getElementById('imagePreviewContainer');
+                const placeholder = document.getElementById('imageUploadPlaceholder');
+                const imageName = document.getElementById('imageName');
+                
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        imageName.textContent = input.files[0].name;
+                        previewContainer.classList.remove('hidden');
+                        placeholder.classList.add('hidden');
                     }
-                });
+                    reader.readAsDataURL(input.files[0]);
+                }
             }
-        });
-    </script>
+            </script>
+        </div>
+
+        {# Section 3: Vente (optionnel) #}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: linear-gradient(to right, #fff7ed, #fffbeb);">
+                <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Vente <span class="text-sm font-normal text-gray-400">(optionnel)</span>
+                </h2>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4">Laissez vide si vous ne souhaitez pas vendre cet article</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Prix (€)</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">€</span>
+                            {{ form_widget(form.price, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                    'placeholder': '29.99'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.price) }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Stock disponible</label>
+                        {{ form_widget(form.stock, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all',
+                                'placeholder': '10'
+                            }
+                        }) }}
+                        {{ form_errors(form.stock) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Boutons d'action #}
+        <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+            <button type="submit" 
+                    class="w-full sm:w-auto px-10 py-4 text-white rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                    style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+                <span class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Enregistrer les modifications
+                </span>
+            </button>
+            <a href="{{ path('app_blog_show', {id: post.id}) }}" 
+               class="w-full sm:w-auto px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 rounded-full hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-center">
+                Annuler
+            </a>
+        </div>
+        
+        {{ form_end(form) }}
+    </main>
+    
+    {# Footer #}
+    <footer class="text-white py-8 mt-16" style="background: linear-gradient(135deg, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-white/90">
+                © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+</div>
 {% endblock %}

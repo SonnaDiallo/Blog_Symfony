@@ -3,363 +3,320 @@
 {% block title %}Mes Articles - Mon Blog{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-amber-400 to-rose-500">
+<div class="min-h-screen bg-gray-100">
     
-    {# Navigation #}
-    <nav class="bg-white/95 backdrop-blur-sm shadow-md sticky top-0 z-40">
+    {# Navigation style Leboncoin #}
+    <nav class="shadow-md sticky top-0 z-40 bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
-                    <a href="{{ path('app_home') }}" class="text-orange-600 font-semibold text-xl">Mon Blog</a>
+                <div class="flex items-center gap-6">
+                    <a href="{{ path('app_blog_index') }}" class="text-orange-500 font-bold text-2xl">Mon Blog</a>
+                    <a href="{{ path('app_blog_index') }}" class="text-gray-600 hover:text-orange-500 transition-colors hidden md:block">Parcourir les articles</a>
                 </div>
                 
-                {# BARRE DE RECHERCHE + BOUTONS #}
                 <div class="flex items-center gap-4">
-                    {# Barre de recherche #}
-                    <form action="{{ path('app_blog_index') }}" method="get" class="relative">
-                        <div class="relative">
-                            <input type="text" 
-                                   name="q" 
-                                   placeholder="Rechercher un article..." 
-                                   class="w-48 sm:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-                                   value="{{ app.request.query.get('q') }}">
-                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </div>
-                            <button type="submit" class="sr-only">Rechercher</button>
-                        </div>
-                    </form>
+                    {# Bouton Déposer un article - Style Leboncoin #}
+                    <a href="{{ path('app_blog_new') }}" 
+                       class="inline-flex items-center gap-2 px-5 py-2.5 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                       style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Déposer un article
+                    </a>
                     
-                    <div class="flex items-center gap-2 sm:gap-4">
-                        <a href="{{ path('app_blog_index') }}" 
-                           class="inline-flex items-center gap-2 px-4 py-2 text-neutral-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            <span class="hidden sm:inline">Retour aux articles</span>
-                        </a>
-                        
-                        {# Bouton "Nouvel article" visible seulement pour ADMIN #}
-                        {% if app.user and is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('app_blog_new') }}" 
-                               class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600 rounded-lg transition-all shadow-md hover:shadow-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    {# Avatar utilisateur #}
+                    {% if app.user %}
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 transition-all">
+                                <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                                    {{ app.user.firstName|first|upper }}
+                                </div>
+                                <span class="hidden md:block text-gray-700 font-medium">{{ app.user.firstName }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
-                                <span class="hidden sm:inline">Nouvel article</span>
-                            </a>
-                        {% endif %}
-                        
-                        {# MENU UTILISATEUR (Dropdown) #}
-                        {% if app.user %}
-                            <div class="relative group">
-                                {# Avatar/initiale de l'utilisateur #}
-                                <button class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-white font-semibold hover:from-orange-600 hover:to-rose-600 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
-                                    {% if app.user.firstName %}
-                                        {{ app.user.firstName|first|upper }}
-                                    {% else %}
-                                        {{ app.user.email|first|upper }}
+                            </button>
+                            
+                            {# Dropdown menu #}
+                            <div class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-50 overflow-hidden">
+                                <div class="p-4 border-b border-gray-100">
+                                    <p class="font-semibold text-gray-900">{{ app.user.firstName }} {{ app.user.lastName }}</p>
+                                    <p class="text-sm text-gray-500">{{ app.user.email }}</p>
+                                </div>
+                                <div class="py-2">
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-orange-50 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        Administration
+                                    </a>
                                     {% endif %}
-                                </button>
-                                
-                                {# Menu dropdown #}
-                                <div class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-50 overflow-hidden">
-                                    {# En-tête du menu #}
-                                    <div class="p-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
-                                        <div class="flex items-center gap-3">
-                                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white text-xl font-bold">
-                                                {% if app.user.firstName %}
-                                                    {{ app.user.firstName|first|upper }}
-                                                {% else %}
-                                                    {{ app.user.email|first|upper }}
-                                                {% endif %}
-                                            </div>
-                                            <div>
-                                                <p class="font-semibold">
-                                                    {% if app.user.firstName %}
-                                                        {{ app.user.firstName }} {{ app.user.lastName }}
-                                                    {% else %}
-                                                        {{ app.user.email }}
-                                                    {% endif %}
-                                                </p>
-                                                <p class="text-sm text-white/80">
-                                                    {{ app.user.email }}
-                                                </p>
-                                                <p class="text-xs mt-1 px-2 py-1 bg-white/20 rounded-full inline-block">
-                                                    {% if is_granted('ROLE_ADMIN') %}
-                                                        Administrateur
-                                                    {% else %}
-                                                        Membre
-                                                    {% endif %}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    {# Options du menu #}
-                                    <div class="py-2">
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                            <a href="{{ path('admin_dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors border-b border-gray-100">
-                                                <div class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <p class="font-medium">Tableau de bord Admin</p>
-                                                    <p class="text-xs text-gray-500">Gestion complète</p>
-                                                </div>
-                                            </a>
-                                        {% endif %}
-                                        
-                                        <a href="{{ path('app_blog_my_posts') }}" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors bg-orange-50 border-l-4 border-orange-500">
-                                            <div class="w-8 h-8 flex items-center justify-center bg-amber-100 text-amber-600 rounded-lg">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">Mes articles</p>
-                                                <p class="text-xs text-gray-500">Voir mes publications</p>
-                                            </div>
-                                        </a>
-                                        
-                                        <div class="border-t border-gray-200 my-2"></div>
-                                        
-                                        <a href="{{ path('app_logout') }}" class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
-                                            <div class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-lg">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">Déconnexion</p>
-                                                <p class="text-xs text-red-500">Quitter la session</p>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    <a href="{{ path('app_blog_my_posts') }}" class="flex items-center gap-3 px-4 py-3 text-orange-600 bg-orange-50 font-medium">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                        </svg>
+                                        Mes articles
+                                    </a>
+                                    <a href="{{ path('app_blog_index') }}" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-orange-50 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        Parcourir
+                                    </a>
+                                    <div class="border-t border-gray-100 my-2"></div>
+                                    <a href="{{ path('app_logout') }}" class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        Déconnexion
+                                    </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    {# Header #}
-    <header class="relative text-white py-20 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-orange-600/30 to-rose-600/30"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-white mb-4 text-4xl md:text-5xl font-bold drop-shadow-lg">Mes Articles</h1>
-            <p class="text-xl text-white/80 drop-shadow-md">
-                Gérez vos publications
-            </p>
-        </div>
-    </header>
-
-    {# Contenu principal #}
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {# Contenu principal style Leboncoin #}
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {# Flash messages #}
         {% for message in app.flashes('success') %}
-            <div class="mb-6 p-4 bg-gradient-to-r from-emerald-500 to-green-500 backdrop-blur-sm border border-emerald-400 text-white rounded-lg shadow-lg">
+            <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
                 {{ message }}
             </div>
         {% endfor %}
 
         {% for message in app.flashes('error') %}
-            <div class="mb-6 p-4 bg-gradient-to-r from-red-500 to-rose-500 backdrop-blur-sm border border-red-400 text-white rounded-lg shadow-lg">
+            <div class="mb-6 p-4 bg-red-100 border border-red-300 text-red-800 rounded-lg flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
                 {{ message }}
             </div>
         {% endfor %}
 
-        {# Statistiques - FOND BLANC #}
-        <div class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white rounded-xl p-6 shadow-lg border border-orange-200">
-                <div class="text-3xl font-bold text-orange-600 mb-2">{{ posts|length }}</div>
-                <div class="text-gray-600">Articles publiés</div>
-            </div>
-            <div class="bg-white rounded-xl p-6 shadow-lg border border-amber-200">
-                <div class="text-3xl font-bold text-amber-600 mb-2">
-                    {% set totalViews = 0 %}
-                    {% for post in posts %}
-                        {% set totalViews = totalViews + 1 %}
-                    {% endfor %}
-                    {{ totalViews }}
-                </div>
-                <div class="text-gray-600">Total de vues</div>
-            </div>
-            <div class="bg-white rounded-xl p-6 shadow-lg border border-rose-200">
-                <div class="text-3xl font-bold text-rose-600 mb-2">
-                    {% if posts|length > 0 %}
-                        {{ posts|first.createdAt|date('d/m/Y') }}
-                    {% else %}
-                        --
-                    {% endif %}
-                </div>
-                <div class="text-gray-600">Dernière publication</div>
-            </div>
-        </div>
-
-        {# Section articles - FOND BLANC #}
-        <div class="bg-white rounded-2xl shadow-xl p-8">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-gray-900 text-2xl font-bold">Mes publications</h2>
-                <a href="{{ path('app_blog_new') }}" 
-                   class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 font-semibold transition-all shadow-lg hover:shadow-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Nouvel article
-                </a>
-            </div>
+        <div class="flex flex-col lg:flex-row gap-8">
             
-            {% if posts|length > 0 %}
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {% for post in posts %}
-                        <article class="group bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:border-orange-400">
-                            
-                            {# Image #}
-                            <a href="{{ path('app_blog_show', {id: post.id}) }}" class="block relative h-48 overflow-hidden">
-                                {% if post.image %}
-                                    <img src="{{ asset('images/' ~ post.image) }}"
-                                         alt="{{ post.title }}" 
-                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                {% else %}
-                                    <div class="w-full h-full bg-gradient-to-br from-orange-400 via-amber-400 to-rose-500 flex items-center justify-center">
-                                        <span class="text-white text-6xl font-bold">+</span>
-                                    </div>
-                                {% endif %}
-                                
-                                {# Badge catégorie #}
-                                {% if post.category %}
-                                    <span class="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full text-xs font-semibold shadow-md">
-                                        {{ post.category.name }}
-                                    </span>
-                                {% endif %}
-                                
-                                {# Overlay gradient sur image #}
-                                <div class="absolute inset-0 bg-gradient-to-t from-orange-900/20 to-transparent"></div>
-                            </a>
-
-                            {# Contenu de l'article #}
-                            <div class="p-6">
-                                {# Titre #}
-                                <a href="{{ path('app_blog_show', {id: post.id}) }}">
-                                    <h3 class="text-gray-900 mb-3 font-bold text-xl group-hover:text-orange-600 transition-colors">
-                                        {{ post.title }}
-                                    </h3>
-                                </a>
-
-                                {# Extrait #}
-                                <p class="text-gray-700 text-sm mb-4 line-clamp-2">
-                                    {{ post.content|striptags|slice(0, 100) }}...
-                                </p>
-
-                                {# Métadonnées #}
-                                <div class="flex items-center justify-between text-xs text-gray-600 mb-4">
-                                    <span class="font-medium">
-                                        Publié le {{ post.createdAt|date('d/m/Y') }}
-                                    </span>
-                                    <div class="flex items-center gap-1 text-orange-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span>{{ post.readTime }}</span>
-                                    </div>
-                                </div>
-
-                                {# Actions #}
-                                <div class="flex items-center justify-between pt-4 border-t border-orange-200">
-                                    <a href="{{ path('app_blog_show', {id: post.id}) }}" 
-                                       class="inline-flex items-center gap-2 text-orange-600 font-semibold group-hover:gap-3 group-hover:text-orange-700 transition-all text-sm">
-                                        Voir l'article
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
-                                    </a>
-                                    
-                                    <div class="flex items-center gap-2">
-                                        <a href="{{ path('app_blog_edit', {id: post.id}) }}" 
-                                           class="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all shadow-md hover:shadow-lg"
-                                           title="Modifier">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
+            {# Sidebar gauche - Stats et filtres style Leboncoin #}
+            <aside class="lg:w-80 flex-shrink-0">
+                {# Profil card #}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                            {{ app.user.firstName|first|upper }}
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-gray-900 text-lg">{{ app.user.firstName }} {{ app.user.lastName }}</h2>
+                            <p class="text-gray-500 text-sm">Membre depuis {{ app.user.createdAt|date('M Y') }}</p>
+                        </div>
+                    </div>
+                    
+                    {# Stats #}
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-orange-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-orange-600">{{ posts|length }}</div>
+                            <div class="text-xs text-gray-600 mt-1">Articles</div>
+                        </div>
+                        <div class="bg-amber-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-amber-600">
+                                {% set totalLikes = 0 %}
+                                {% for post in posts %}
+                                    {% set totalLikes = totalLikes + post.likes|length %}
+                                {% endfor %}
+                                {{ totalLikes }}
                             </div>
-                        </article>
-                    {% endfor %}
+                            <div class="text-xs text-gray-600 mt-1">J'aime</div>
+                        </div>
+                    </div>
                 </div>
-            {% else %}
-                <div class="text-center py-16">
-                    <div class="inline-block p-8 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border-2 border-orange-200 shadow-lg">
-                        <div class="text-6xl mb-4 text-orange-500 font-bold">!</div>
-                        <h3 class="text-gray-800 text-2xl font-bold mb-4">Aucun article publié</h3>
-                        <p class="text-gray-600 mb-6">Vous n'avez pas encore publié d'article.</p>
+                
+                {# Actions rapides #}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="font-bold text-gray-900 mb-4">Actions rapides</h3>
+                    <div class="space-y-3">
                         <a href="{{ path('app_blog_new') }}" 
-                           class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 font-semibold transition-all shadow-lg hover:shadow-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                            Créer mon premier article
+                           class="flex items-center gap-3 p-3 rounded-lg hover:bg-orange-50 transition-colors group">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 group-hover:text-orange-600">Nouvel article</p>
+                                <p class="text-xs text-gray-500">Créer une publication</p>
+                            </div>
+                        </a>
+                        <a href="{{ path('app_blog_index') }}" 
+                           class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Parcourir</p>
+                                <p class="text-xs text-gray-500">Voir tous les articles</p>
+                            </div>
                         </a>
                     </div>
                 </div>
-            {% endif %}
+            </aside>
+            
+            {# Liste des articles style Leboncoin #}
+            <div class="flex-1">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                    {# Header de la liste #}
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-xl font-bold text-gray-900">Mes articles ({{ posts|length }})</h1>
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <span>Trier par:</span>
+                                <select class="border border-gray-300 rounded-lg px-3 py-1.5 text-gray-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <option>Plus récent</option>
+                                    <option>Plus ancien</option>
+                                    <option>Plus populaire</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {# Liste des articles #}
+                    {% if posts|length > 0 %}
+                        <div class="divide-y divide-gray-100">
+                            {% for post in posts %}
+                                <article class="p-4 hover:bg-gray-50 transition-colors">
+                                    <div class="flex gap-4">
+                                        {# Image #}
+                                        <a href="{{ path('app_blog_show', {id: post.id}) }}" class="flex-shrink-0">
+                                            <div class="w-32 h-24 md:w-40 md:h-28 rounded-lg overflow-hidden bg-gray-100">
+                                                {% if post.image %}
+                                                    <img src="{{ asset('uploads/' ~ post.image) }}" 
+                                                         alt="{{ post.title }}" 
+                                                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                                                {% else %}
+                                                    <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                        
+                                        {# Contenu #}
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-start justify-between gap-4">
+                                                <div class="flex-1 min-w-0">
+                                                    <a href="{{ path('app_blog_show', {id: post.id}) }}" class="block">
+                                                        <h3 class="font-semibold text-gray-900 hover:text-orange-600 transition-colors truncate text-lg">
+                                                            {{ post.title }}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="text-gray-500 text-sm mt-1 line-clamp-2">
+                                                        {{ post.content|striptags|slice(0, 120) }}...
+                                                    </p>
+                                                    
+                                                    {# Métadonnées #}
+                                                    <div class="flex items-center gap-4 mt-3 text-xs text-gray-500">
+                                                        <span class="flex items-center gap-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                            </svg>
+                                                            {{ post.createdAt|date('d/m/Y') }}
+                                                        </span>
+                                                        {% if post.category %}
+                                                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
+                                                            {{ post.category.name }}
+                                                        </span>
+                                                        {% endif %}
+                                                        <span class="flex items-center gap-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                            </svg>
+                                                            {{ post.likes|length }} j'aime
+                                                        </span>
+                                                        <span class="flex items-center gap-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                            {{ post.readTime }} min
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                
+                                                {# Actions #}
+                                                <div class="flex items-center gap-2">
+                                                    <a href="{{ path('app_blog_edit', {id: post.id}) }}" 
+                                                       class="p-2 text-gray-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+                                                       title="Modifier">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                        </svg>
+                                                    </a>
+                                                    <a href="{{ path('app_blog_show', {id: post.id}) }}" 
+                                                       class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                       title="Voir">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {# État vide style Leboncoin #}
+                        <div class="p-12 text-center">
+                            <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(to right, #fed7aa, #fef3c7);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Aucun article pour le moment</h3>
+                            <p class="text-gray-500 mb-6 max-w-sm mx-auto">
+                                Commencez à partager vos idées avec la communauté en créant votre premier article.
+                            </p>
+                            <a href="{{ path('app_blog_new') }}" 
+                               class="inline-flex items-center gap-2 px-6 py-3 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                               style="background: linear-gradient(to right, #f97316, #f59e0b);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                                Déposer mon premier article
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </main>
     
     {# Footer #}
-    <footer class="bg-white text-gray-700 py-12 mt-16 border-t border-gray-200 shadow-lg">
+    <footer class="text-white py-12 mt-16 shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-600 text-lg mb-4">
+            <p class="text-white text-lg mb-4">
                 © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.
             </p>
             <div class="flex justify-center gap-6">
-                <a href="#" class="text-gray-500 hover:text-orange-600 transition-colors">Mentions légales</a>
-                <a href="#" class="text-gray-500 hover:text-orange-600 transition-colors">Contact</a>
-                <a href="#" class="text-gray-500 hover:text-orange-600 transition-colors">À propos</a>
+                <a href="{{ path('mentions_legales') }}" class="text-white/80 hover:text-white transition-colors">Mentions légales</a>
+                <a href="{{ path('contact') }}" class="text-white/80 hover:text-white transition-colors">Contact</a>
+                <a href="{{ path('a_propos') }}" class="text-white/80 hover:text-white transition-colors">À propos</a>
             </div>
         </div>
     </footer>
     
 </div>
-
-{# JavaScript pour le dropdown #}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Fermer le dropdown quand on clique ailleurs
-    document.addEventListener('click', function(event) {
-        const dropdowns = document.querySelectorAll('.group');
-        dropdowns.forEach(dropdown => {
-            if (!dropdown.contains(event.target)) {
-                const menu = dropdown.querySelector('.absolute');
-                if (menu) {
-                    menu.classList.remove('visible', 'opacity-100');
-                    menu.classList.add('invisible', 'opacity-0');
-                }
-            }
-        });
-    });
-
-    // Gérer le focus pour l'accessibilité
-    const userButtons = document.querySelectorAll('.group button');
-    userButtons.forEach(button => {
-        button.addEventListener('focus', function() {
-            const menu = this.parentElement.querySelector('.absolute');
-            if (menu) {
-                menu.classList.remove('invisible', 'opacity-0');
-                menu.classList.add('visible', 'opacity-100');
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

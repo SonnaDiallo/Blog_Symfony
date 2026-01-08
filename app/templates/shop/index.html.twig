@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique - Mon Blog{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
+    
+    {# Navigation #}
+    <nav class="shadow-md sticky top-0 z-40" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <a href="{{ path('app_blog_index') }}" class="text-white font-bold text-xl">Mon Blog</a>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <a href="{{ path('app_blog_index') }}" class="text-white/80 hover:text-white transition-colors">Blog</a>
+                    <a href="{{ path('app_shop_index') }}" class="text-white font-semibold">Boutique</a>
+                    
+                    {% if app.user %}
+                        <a href="{{ path('app_cart_index') }}" class="relative inline-flex items-center gap-2 px-4 py-2 text-white hover:bg-white/20 rounded-lg transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            Panier
+                        </a>
+                    {% endif %}
+                    
+                    {% if app.user %}
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-white font-semibold">
+                            {{ app.user.firstName|first|upper }}
+                        </div>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="px-4 py-2 bg-white text-orange-600 rounded-lg hover:bg-orange-50 transition-all font-semibold">
+                            Connexion
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {# Header #}
+    <header class="text-white py-16 shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold mb-4">Notre Boutique</h1>
+            <p class="text-xl text-white/90">Découvrez nos produits de décoration</p>
+        </div>
+    </header>
+
+    {# Contenu principal #}
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        
+        {% for message in app.flashes('success') %}
+            <div class="mb-6 p-4 bg-green-500 text-white rounded-lg">{{ message }}</div>
+        {% endfor %}
+
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            {# Filtres #}
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <div class="flex flex-wrap gap-2">
+                    <a href="{{ path('app_shop_index') }}" 
+                       class="px-4 py-2 rounded-lg transition-all {% if not currentCategory %}bg-orange-500 text-white{% else %}bg-neutral-100 text-neutral-700 hover:bg-orange-100{% endif %}">
+                        Tous
+                    </a>
+                    {% for category in categories %}
+                        <a href="{{ path('app_shop_index', {category: category.id}) }}" 
+                           class="px-4 py-2 rounded-lg transition-all {% if currentCategory == category.id %}bg-orange-500 text-white{% else %}bg-neutral-100 text-neutral-700 hover:bg-orange-100{% endif %}">
+                            {{ category.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+                
+                <form action="{{ path('app_shop_index') }}" method="get" class="relative">
+                    <input type="text" name="q" placeholder="Rechercher..." value="{{ searchQuery }}"
+                           class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </form>
+            </div>
+
+            {# Grille de produits #}
+            {% if products|length > 0 %}
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {% for product in products %}
+                        <article class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-gray-100">
+                            <a href="{{ path('app_shop_show', {id: product.id}) }}" class="block relative h-48 overflow-hidden">
+                                {% if product.image %}
+                                    <img src="{{ asset('uploads/' ~ product.image) }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                {% else %}
+                                    <div class="w-full h-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center">
+                                        <span class="text-white text-4xl">🛍️</span>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if not product.isInStock %}
+                                    <span class="absolute top-2 right-2 px-2 py-1 bg-red-500 text-white text-xs rounded">Rupture</span>
+                                {% endif %}
+                            </a>
+                            
+                            <div class="p-4">
+                                <a href="{{ path('app_shop_show', {id: product.id}) }}">
+                                    <h3 class="font-semibold text-neutral-900 mb-2 group-hover:text-orange-600 transition-colors">{{ product.name }}</h3>
+                                </a>
+                                <p class="text-sm text-neutral-600 mb-3 line-clamp-2">{{ product.description|slice(0, 80) }}...</p>
+                                
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xl font-bold text-orange-600">{{ product.formattedPrice }}</span>
+                                    
+                                    {% if app.user and product.isInStock %}
+                                        <form action="{{ path('app_cart_add', {id: product.id}) }}" method="post">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="p-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-16">
+                    <p class="text-xl text-neutral-500">Aucun produit trouvé.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+</div>
+{% endblock %}
