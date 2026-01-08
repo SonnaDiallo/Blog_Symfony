@@ -3,53 +3,283 @@
 {% block title %}Bienvenue - Mon Blog{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-    {# Header orange #}
-    <header class="text-white py-24 shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6">Bienvenue</h1>
-            <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
-                Découvrez notre blog de décoration
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 overflow-hidden">
+    
+    {# Hero Section avec particules animées #}
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {# Background animé #}
+        <div class="absolute inset-0 animate-gradient" style="background: linear-gradient(135deg, #f97316, #f59e0b, #ef4444, #f97316); background-size: 400% 400%;"></div>
+        
+        {# Particules flottantes décoratives #}
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle absolute w-4 h-4 bg-white/20 rounded-full animate-float" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+            <div class="particle absolute w-6 h-6 bg-white/15 rounded-full animate-float" style="top: 60%; left: 20%; animation-delay: 1s;"></div>
+            <div class="particle absolute w-3 h-3 bg-white/25 rounded-full animate-float" style="top: 30%; left: 80%; animation-delay: 2s;"></div>
+            <div class="particle absolute w-5 h-5 bg-white/20 rounded-full animate-float" style="top: 70%; left: 70%; animation-delay: 0.5s;"></div>
+            <div class="particle absolute w-4 h-4 bg-white/15 rounded-full animate-float" style="top: 40%; left: 50%; animation-delay: 1.5s;"></div>
+            <div class="particle absolute w-8 h-8 bg-white/10 rounded-full animate-float" style="top: 80%; left: 30%; animation-delay: 2.5s;"></div>
+            <div class="particle absolute w-3 h-3 bg-white/20 rounded-full animate-float" style="top: 15%; left: 60%; animation-delay: 3s;"></div>
+            <div class="particle absolute w-6 h-6 bg-white/15 rounded-full animate-float" style="top: 50%; left: 90%; animation-delay: 0.8s;"></div>
+        </div>
+        
+        {# Formes géométriques décoratives #}
+        <div class="absolute top-20 left-10 w-32 h-32 border-4 border-white/20 rounded-full animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 border-4 border-white/20 rotate-45 animate-bounce-subtle"></div>
+        <div class="absolute top-1/3 right-20 w-16 h-16 bg-white/10 rounded-lg rotate-12 animate-float" style="animation-delay: 1s;"></div>
+        
+        {# Contenu Hero #}
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {# Badge animé #}
+            <div class="animate-on-load animate-fade-in-down inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-8 border border-white/30">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                Nouveau contenu chaque semaine
+            </div>
+            
+            {# Titre principal animé #}
+            <h1 class="animate-on-load animate-fade-in-up delay-100 text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight">
+                Bienvenue sur
+                <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-white to-yellow-200 animate-gradient" style="background-size: 200% auto;">
+                    Mon Blog
+                </span>
+            </h1>
+            
+            {# Sous-titre #}
+            <p class="animate-on-load animate-fade-in-up delay-200 text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Découvrez l'art de la décoration intérieure, des conseils design et des inspirations pour transformer votre espace de vie.
             </p>
+            
+            {# Boutons CTA #}
+            <div class="animate-on-load animate-fade-in-up delay-300 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{{ path('app_blog_index') }}" 
+                   class="group inline-flex items-center gap-3 px-8 py-4 bg-white text-orange-600 rounded-xl text-lg font-bold shadow-2xl hover:shadow-3xl hover-lift hover-glow transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                    Explorer le Blog
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
+                
+                <a href="{{ path('a_propos') }}" 
+                   class="group inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white/50 text-white rounded-xl text-lg font-semibold hover:bg-white/10 hover:border-white transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    En savoir plus
+                </a>
+            </div>
+            
+            {# Indicateur de scroll #}
+            <div class="animate-on-load animate-fade-in-up delay-500 mt-16">
+                <a href="#features" class="inline-flex flex-col items-center text-white/70 hover:text-white transition-colors">
+                    <span class="text-sm mb-2">Découvrir</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </header>
-    
-    {# Contenu principal #}
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
-            <div class="w-20 h-20 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-8">
+
+    {# Section Features #}
+    <section id="features" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {# Titre de section #}
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold mb-4">
+                    Pourquoi nous choisir
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Ce que nous vous <span class="text-gradient-animated">offrons</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Un blog dédié à l'inspiration et aux conseils pratiques pour votre intérieur
+                </p>
+            </div>
+            
+            {# Grille de features #}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {# Feature 1 #}
+                <div class="group p-8 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-100 hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform animate-pulse-glow">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Inspirations Créatives</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Des idées originales et tendances pour transformer chaque pièce de votre maison en un espace unique.
+                    </p>
+                </div>
+                
+                {# Feature 2 #}
+                <div class="group p-8 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-100 hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Guides Pratiques</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Des tutoriels détaillés et conseils d'experts pour réaliser vos projets de décoration pas à pas.
+                    </p>
+                </div>
+                
+                {# Feature 3 #}
+                <div class="group p-8 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-100 hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tendances Actuelles</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Restez à jour avec les dernières tendances en matière de design d'intérieur et de décoration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section Stats animée #}
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 animate-gradient" style="background: linear-gradient(135deg, #f97316, #f59e0b, #ef4444); background-size: 200% 200%;"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+                <div class="hover-scale cursor-default">
+                    <div class="text-4xl md:text-5xl font-black mb-2">100+</div>
+                    <div class="text-white/80 font-medium">Articles publiés</div>
+                </div>
+                <div class="hover-scale cursor-default">
+                    <div class="text-4xl md:text-5xl font-black mb-2">50K+</div>
+                    <div class="text-white/80 font-medium">Lecteurs mensuels</div>
+                </div>
+                <div class="hover-scale cursor-default">
+                    <div class="text-4xl md:text-5xl font-black mb-2">15+</div>
+                    <div class="text-white/80 font-medium">Catégories</div>
+                </div>
+                <div class="hover-scale cursor-default">
+                    <div class="text-4xl md:text-5xl font-black mb-2">5⭐</div>
+                    <div class="text-white/80 font-medium">Note moyenne</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section CTA finale #}
+    <section class="py-24 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full mb-8 animate-float">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                 </svg>
             </div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Explorez nos articles</h2>
-            <p class="text-gray-600 mb-8 max-w-xl mx-auto">
-                Parcourez nos derniers articles sur la décoration intérieure, le design et l'aménagement de votre espace de vie.
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Prêt à vous inspirer ?
+            </h2>
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Rejoignez notre communauté de passionnés de décoration et recevez nos meilleurs conseils directement.
             </p>
-            <a href="{{ path('app_blog_index') }}" 
-               class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-lg font-semibold shadow-lg hover:from-orange-600 hover:to-amber-600 hover:shadow-xl transition-all">
-                Accéder au Blog
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-            </a>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{{ path('app_blog_index') }}" 
+                   class="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl text-lg font-bold shadow-2xl hover:from-orange-600 hover:to-amber-600 hover-lift transition-all">
+                    Commencer l'exploration
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
+                <a href="{{ path('contact') }}" 
+                   class="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-gray-600 text-gray-300 rounded-xl text-lg font-semibold hover:border-orange-500 hover:text-orange-500 transition-all">
+                    Nous contacter
+                </a>
+            </div>
         </div>
-    </main>
+    </section>
 
-    {# Footer #}
-    <footer class="text-white py-12 shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-white text-lg mb-4">
-                    © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés.
-                </p>
-                <div class="flex justify-center gap-6">
-                    <a href="{{ path('mentions_legales') }}" class="text-white/80 hover:text-white transition-colors">Mentions légales</a>
-                    <a href="{{ path('contact') }}" class="text-white/80 hover:text-white transition-colors">Contact</a>
-                    <a href="{{ path('a_propos') }}" class="text-white/80 hover:text-white transition-colors">À propos</a>
+    {# Footer amélioré #}
+    <footer class="relative overflow-hidden">
+        <div class="absolute inset-0 animate-gradient" style="background: linear-gradient(135deg, #f97316, #f59e0b, #ea580c); background-size: 200% 200%;"></div>
+        <div class="relative z-10 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-3 gap-12 mb-12">
+                    {# Logo et description #}
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Mon Blog</h3>
+                        <p class="text-white/80 leading-relaxed">
+                            Votre source d'inspiration quotidienne pour la décoration intérieure et le design.
+                        </p>
+                    </div>
+                    
+                    {# Liens rapides #}
+                    <div>
+                        <h4 class="text-lg font-semibold text-white mb-4">Liens rapides</h4>
+                        <ul class="space-y-2">
+                            <li><a href="{{ path('app_blog_index') }}" class="text-white/80 hover:text-white transition-colors">Blog</a></li>
+                            <li><a href="{{ path('a_propos') }}" class="text-white/80 hover:text-white transition-colors">À propos</a></li>
+                            <li><a href="{{ path('contact') }}" class="text-white/80 hover:text-white transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    {# Légal #}
+                    <div>
+                        <h4 class="text-lg font-semibold text-white mb-4">Légal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="{{ path('mentions_legales') }}" class="text-white/80 hover:text-white transition-colors">Mentions légales</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                {# Copyright #}
+                <div class="pt-8 border-t border-white/20 text-center">
+                    <p class="text-white/80">
+                        © {{ 'now'|date('Y') }} Mon Blog. Tous droits réservés. Fait avec ❤️
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
 </div>
+
+{# Script pour les animations au scroll #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation des éléments au chargement
+    const animatedElements = document.querySelectorAll('.animate-on-load');
+    animatedElements.forEach((el, index) => {
+        setTimeout(() => {
+            el.style.opacity = '1';
+        }, 100);
+    });
+
+    // Animation au scroll (Intersection Observer)
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in-up');
+                entry.target.style.opacity = '1';
+            }
+        });
+    }, observerOptions);
+
+    // Observer les sections
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+
+    // Effet parallaxe léger sur le hero
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('header');
+        if (hero && scrolled < window.innerHeight) {
+            hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
+    });
+});
+</script>
 {% endblock %}

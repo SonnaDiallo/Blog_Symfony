@@ -3,14 +3,18 @@
 {% block title %}À propos - Mon Blog{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-    <!-- Header -->
-    <header class="text-white shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 overflow-hidden">
+    <!-- Header animé -->
+    <header class="text-white shadow-lg relative overflow-hidden" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle absolute w-3 h-3 bg-white/10 rounded-full animate-float" style="top: 30%; left: 10%;"></div>
+            <div class="particle absolute w-4 h-4 bg-white/10 rounded-full animate-float" style="top: 60%; right: 20%; animation-delay: 1s;"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex items-center justify-between">
-                <a href="{{ path('app_blog_index') }}" class="text-2xl font-bold">Mon Blog</a>
-                <a href="{{ path('app_blog_index') }}" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ path('app_blog_index') }}" class="text-2xl font-bold hover-scale inline-block">Mon Blog</a>
+                <a href="{{ path('app_blog_index') }}" class="group flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Retour au blog
@@ -20,13 +24,28 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <!-- Hero section -->
-            <div class="bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-12 text-white text-center">
-                <h1 class="text-4xl font-bold mb-4">À propos de Mon Blog</h1>
-                <p class="text-xl text-white/90 max-w-2xl mx-auto">
-                    Votre source d'inspiration pour la décoration intérieure et le design
-                </p>
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden animate-on-load animate-fade-in-up">
+            <!-- Hero section avec animation -->
+            <div class="relative bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-12 text-white text-center overflow-hidden">
+                <!-- Particules décoratives -->
+                <div class="absolute inset-0 overflow-hidden">
+                    <div class="particle absolute w-4 h-4 bg-white/10 rounded-full animate-float" style="top: 20%; left: 10%;"></div>
+                    <div class="particle absolute w-6 h-6 bg-white/10 rounded-full animate-float" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
+                    <div class="particle absolute w-3 h-3 bg-white/15 rounded-full animate-float" style="bottom: 20%; left: 30%; animation-delay: 2s;"></div>
+                    <div class="particle absolute w-5 h-5 bg-white/10 rounded-full animate-float" style="top: 40%; right: 40%; animation-delay: 1.5s;"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 animate-bounce-subtle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl font-bold mb-4 animate-fade-in-down">À propos de Mon Blog</h1>
+                    <p class="text-xl text-white/90 max-w-2xl mx-auto animate-fade-in-up delay-200">
+                        Votre source d'inspiration pour la décoration intérieure et le design
+                    </p>
+                </div>
             </div>
 
             <div class="p-8 md:p-12 space-y-12">
@@ -54,7 +73,7 @@
                 <!-- Notre mission -->
                 <section>
                     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                        <span class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <span class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center animate-pulse-glow">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
@@ -62,37 +81,37 @@
                         Notre mission
                     </h2>
                     <div class="grid md:grid-cols-3 gap-6">
-                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200">
-                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                        <div class="group bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200 hover-lift cursor-pointer transition-all">
+                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                 </svg>
                             </div>
-                            <h3 class="font-semibold text-gray-800 mb-2">Inspirer</h3>
+                            <h3 class="font-semibold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">Inspirer</h3>
                             <p class="text-gray-600 text-sm">
                                 Vous proposer des idées créatives et des tendances actuelles pour stimuler votre imagination.
                             </p>
                         </div>
 
-                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200">
-                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                        <div class="group bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200 hover-lift cursor-pointer transition-all">
+                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
                             </div>
-                            <h3 class="font-semibold text-gray-800 mb-2">Éduquer</h3>
+                            <h3 class="font-semibold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">Éduquer</h3>
                             <p class="text-gray-600 text-sm">
                                 Partager des conseils pratiques et des tutoriels pour vous aider à réaliser vos projets.
                             </p>
                         </div>
 
-                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200">
-                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                        <div class="group bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-200 hover-lift cursor-pointer transition-all">
+                            <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             </div>
-                            <h3 class="font-semibold text-gray-800 mb-2">Connecter</h3>
+                            <h3 class="font-semibold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">Connecter</h3>
                             <p class="text-gray-600 text-sm">
                                 Créer une communauté de passionnés qui partagent leurs expériences et leurs créations.
                             </p>
@@ -142,18 +161,31 @@
                 </section>
 
                 <!-- CTA -->
-                <section class="bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl p-8 text-center text-white">
-                    <h3 class="text-2xl font-bold mb-4">Rejoignez notre communauté</h3>
-                    <p class="text-white/90 mb-6 max-w-xl mx-auto">
-                        Inscrivez-vous pour recevoir nos derniers articles et conseils directement dans votre boîte mail.
-                    </p>
-                    <a href="{{ path('app_register') }}" 
-                       class="inline-flex items-center gap-2 px-6 py-3 bg-white text-orange-600 font-medium rounded-lg hover:bg-gray-100 transition-all shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                        </svg>
-                        Créer un compte
-                    </a>
+                <section class="relative bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl p-8 text-center text-white overflow-hidden animate-gradient" style="background-size: 200% 200%;">
+                    <!-- Particules décoratives -->
+                    <div class="absolute inset-0 overflow-hidden">
+                        <div class="particle absolute w-3 h-3 bg-white/10 rounded-full animate-float" style="top: 20%; left: 10%;"></div>
+                        <div class="particle absolute w-4 h-4 bg-white/10 rounded-full animate-float" style="bottom: 30%; right: 15%; animation-delay: 1s;"></div>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center justify-center w-14 h-14 bg-white/20 rounded-full mb-4 animate-bounce-subtle">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Rejoignez notre communauté</h3>
+                        <p class="text-white/90 mb-6 max-w-xl mx-auto">
+                            Inscrivez-vous pour recevoir nos derniers articles et conseils directement dans votre boîte mail.
+                        </p>
+                        <a href="{{ path('app_register') }}" 
+                           class="group inline-flex items-center gap-2 px-6 py-3 bg-white text-orange-600 font-medium rounded-lg hover:bg-gray-100 transition-all shadow-lg hover-lift hover-glow">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            Créer un compte
+                        </a>
+                    </div>
                 </section>
             </div>
         </div>

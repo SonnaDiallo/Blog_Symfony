@@ -3,14 +3,18 @@
 {% block title %}Mentions légales - Mon Blog{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-    <!-- Header -->
-    <header class="text-white shadow-lg" style="background: linear-gradient(to right, #f97316, #f59e0b);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 overflow-hidden">
+    <!-- Header animé -->
+    <header class="text-white shadow-lg relative overflow-hidden" style="background: linear-gradient(to right, #f97316, #f59e0b);">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle absolute w-3 h-3 bg-white/10 rounded-full animate-float" style="top: 30%; left: 10%;"></div>
+            <div class="particle absolute w-4 h-4 bg-white/10 rounded-full animate-float" style="top: 60%; right: 20%; animation-delay: 1s;"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex items-center justify-between">
-                <a href="{{ path('app_blog_index') }}" class="text-2xl font-bold">Mon Blog</a>
-                <a href="{{ path('app_blog_index') }}" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ path('app_blog_index') }}" class="text-2xl font-bold hover-scale inline-block">Mon Blog</a>
+                <a href="{{ path('app_blog_index') }}" class="group flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Retour au blog
@@ -20,19 +24,33 @@
     </header>
 
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <!-- Hero section -->
-            <div class="bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-12 text-white text-center">
-                <h1 class="text-4xl font-bold mb-4">Mentions légales</h1>
-                <p class="text-xl text-white/90 max-w-2xl mx-auto">
-                    Informations légales et conditions d'utilisation du site
-                </p>
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden animate-on-load animate-fade-in-up">
+            <!-- Hero section avec animation -->
+            <div class="relative bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-12 text-white text-center overflow-hidden">
+                <!-- Particules décoratives -->
+                <div class="absolute inset-0 overflow-hidden">
+                    <div class="particle absolute w-4 h-4 bg-white/10 rounded-full animate-float" style="top: 20%; left: 10%;"></div>
+                    <div class="particle absolute w-6 h-6 bg-white/10 rounded-full animate-float" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
+                    <div class="particle absolute w-3 h-3 bg-white/15 rounded-full animate-float" style="bottom: 20%; left: 30%; animation-delay: 2s;"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 animate-bounce-subtle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl font-bold mb-4 animate-fade-in-down">Mentions légales</h1>
+                    <p class="text-xl text-white/90 max-w-2xl mx-auto animate-fade-in-up delay-200">
+                        Informations légales et conditions d'utilisation du site
+                    </p>
+                </div>
             </div>
 
             <div class="p-8 md:p-12 space-y-8">
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">1</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">1</span>
                         Éditeur du site
                     </h2>
                     <p class="text-gray-600">
@@ -46,9 +64,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">2</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">2</span>
                         Hébergement
                     </h2>
                     <p class="text-gray-600">
@@ -59,9 +77,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">3</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">3</span>
                         Propriété intellectuelle
                     </h2>
                     <p class="text-gray-600">
@@ -71,9 +89,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">4</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">4</span>
                         Protection des données personnelles
                     </h2>
                     <p class="text-gray-600">
@@ -87,9 +105,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">5</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">5</span>
                         Cookies
                     </h2>
                     <p class="text-gray-600">
@@ -98,9 +116,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">6</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">6</span>
                         Limitation de responsabilité
                     </h2>
                     <p class="text-gray-600">
@@ -110,9 +128,9 @@
                     </p>
                 </section>
 
-                <section>
+                <section class="group p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100 hover-lift transition-all">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-3">
-                        <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 font-bold">7</span>
+                        <span class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">7</span>
                         Droit applicable
                     </h2>
                     <p class="text-gray-600">
@@ -122,7 +140,10 @@
                 </section>
 
                 <div class="mt-8 pt-8 border-t border-gray-200">
-                    <p class="text-sm text-gray-500 text-center">
+                    <p class="text-sm text-gray-500 text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                         Dernière mise à jour : {{ 'now'|date('d/m/Y') }}
                     </p>
                 </div>
